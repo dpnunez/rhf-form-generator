@@ -1,5 +1,5 @@
 import React from 'react'
-import { Controller, useFormContext } from 'react-hook-form'
+import { useFormContext } from 'react-hook-form'
 import { TextField, TextFieldMasked } from './index'
 
 
@@ -8,7 +8,7 @@ const GenericInput = ({type, label, name, ...inputProps}) => {
 
   switch (type) {
     case 'textField': return <TextField  label={label} inputProps={{name}} inputRef={register} fullWidth />
-    case 'textFieldMasked': return <Controller  as={TextFieldMasked} label={label} mask={inputProps.mask} name={name} fullWidth />
+    case 'textFieldMasked': return <TextFieldMasked label={label} mask={inputProps.mask} name={name} control={control} fullWidth />
     default: return <p>p</p>
   }
   return (

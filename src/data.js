@@ -30,7 +30,8 @@ const simple = {
         required: true,
       },
       first_txt_field_masked: {
-        type: 'date',
+        type: "string",
+        format: 'date-time',
         required: true
       }
     }

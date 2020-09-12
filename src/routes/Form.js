@@ -1,38 +1,32 @@
-import React, { useState, useCallback } from 'react'
-import { Button, MenuItem, Grid } from '@material-ui/core'
-import { useForm, Controller, FormProvider } from 'react-hook-form'
+import React, { useState } from 'react'
+import { Button, Grid } from '@material-ui/core'
+import { useForm, FormProvider } from 'react-hook-form'
 import styled from 'styled-components'
+import { buildYup } from 'schema-to-yup'
+import { yupResolver } from '@hookform/resolvers';
 
 import { simple as formData } from '../data'
 import { GenericInput } from '../components'
+
+
+console.log(buildYup)
 
 let renderCount = 0
 
 const Form = () => {
 	const [isLoading, setIsLoading] = useState(false)
-
-	const formMethods = useForm()
-	const { register, control, reset, handleSubmit, setValue, watch, getValues } = formMethods
-
-	// const getAsyncData = useCallback(async({loader}) => {
-	// 	try {
-	// 		if (loader) {
-	// 			setIsLoading(true)
-	// 		}
-	// 		const data = await getFormData(true, 1999)
-	// 		reset(data)
-	// 	} catch (e) {
-	// 		console.log(e)
-	// 	} finally {
-	// 		setIsLoading(false)
-	// 	}
-	// }, [reset])
+	const schema = buildYup(formData.rules)
+	
+	const formMethods = useForm({
+		resolver: yupResolver(schema)
+	})
+	const { handleSubmit, getValues } = formMethods
 
 	renderCount++
 
 	return (
 		<FormProvider {...formMethods}>
-			<FormContainer onSubmit={handleSubmit((values) => console.log(values))}>
+			<FormContainer onSubmit={handleSubmit((values) => console.log(values) || alert('submited'))}>
 				<FieldsContainer>
 					{isLoading ? <h1>loading</h1> : formData.model.chapters.map(chapter => (
 						<Grid container key={chapter.title}>
