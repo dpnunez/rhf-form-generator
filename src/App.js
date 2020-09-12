@@ -1,26 +1,41 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { createMuiTheme, ThemeProvider, StylesProvider } from '@material-ui/core/styles';
+import { createGlobalStyle, ThemeProvider as StyledThemeProvider  } from 'styled-components'
 
-function App() {
+import { Form } from './routes/Form'
+
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0;
+    background-color: #ffe5c4;
+  }
+`
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#6b3074'
+    },
+    secondary: {
+      main: '#86a3c3'
+    }
+  }
+})
+
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <StylesProvider injectFirst>
+      <ThemeProvider theme={theme}>
+        <StyledThemeProvider theme={theme}>
+          <GlobalStyle />
+          <Form />
+        </StyledThemeProvider>
+      </ThemeProvider>
+    </StylesProvider>
+  )
 }
+
 
 export default App;
