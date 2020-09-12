@@ -9,8 +9,6 @@ import { simple as formData } from '../data'
 import { GenericInput } from '../components'
 
 
-console.log(buildYup)
-
 let renderCount = 0
 
 const Form = () => {

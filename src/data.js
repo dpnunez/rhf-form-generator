@@ -15,9 +15,15 @@ const simple = {
             name: 'first_txt_field_masked',
             type: 'textFieldMasked',
             mask: '00/00/0000'
+          },
+          {
+            label: 'Phone',
+            name: 'phone_user',
+            type: 'textFieldMasked',
+            mask: [{mask: '(00) 0000-0000'}, {mask: '(00) 00000-0000'}]
           }
         ]
-      }
+      },
     ]
   },
   rules: {
@@ -31,7 +37,7 @@ const simple = {
       },
       first_txt_field_masked: {
         type: "string",
-        format: 'date-time',
+        minLength: 8,
         required: true
       }
     }
