@@ -1,18 +1,12 @@
 import React, { useState, useCallback } from 'react'
-import { Button, MenuItem } from '@material-ui/core'
+import { Button, MenuItem, Grid } from '@material-ui/core'
 import { useForm, Controller, FormProvider } from 'react-hook-form'
 import styled from 'styled-components'
 
-import { TextField } from '../components/TextField'
-import { TextFieldMasked } from '../components/TextFieldMask'
-import { SelectNative } from '../components/SelectNative'
-import { Select } from '../components/Select'
-// import { getFormData } from '../services'
-import { FileInput } from '../components/FileInput'
+import { simple as formData } from '../data'
+import { GenericInput } from '../components'
 
-let renderCount = 1
-
-
+let renderCount = 0
 
 const Form = () => {
 	const [isLoading, setIsLoading] = useState(false)
@@ -40,9 +34,18 @@ const Form = () => {
 		<FormProvider {...formMethods}>
 			<FormContainer onSubmit={handleSubmit((values) => console.log(values))}>
 				<FieldsContainer>
-					{isLoading ? <h1>loading</h1> : (
-						<div>teste</div>
-					)}
+					{isLoading ? <h1>loading</h1> : formData.model.chapters.map(chapter => (
+						<Grid container key={chapter.title}>
+							<Grid item xs={12}>
+								<h1>{chapter.title}</h1>
+							</Grid>
+							{chapter.inputs.map(inputProps => (
+								<Grid item xs={inputProps.size || 6}>
+									<GenericInput {...inputProps} />
+								</Grid>
+							))}
+						</Grid>
+					))}
 				</FieldsContainer>
 				<Controls>
 					<Button onClick={() => console.log(getValues())} color='primary' variant='outlined'>Show Values (LOG)</Button>
